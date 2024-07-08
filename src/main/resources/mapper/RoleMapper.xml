@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java5.backendapi.mapper.RoleMapper">
+    <resultMap id="RoleEntityMap" type="com.java5.backendapi.data.entity.RoleE">
+        <result property="roleId" column="ROLE_ID"></result>
+        <result property="roleName" column="ROLE_NAME"></result>
+        <result property="description" column="DESCRIPTION"></result>
+        <result property="color" column="COLOR"></result>
+    </resultMap>
+
+    <select id="getRoleByUserId" resultMap="RoleEntityMap" parameterType="int">
+        SELECT
+            r.ROLE_ID,
+            r.ROLE_NAME,
+            r.DESCRIPTION,
+            r.COLOR
+        FROM FE_ROLE r LEFT JOIN FE_USER u on r.ROLE_ID = u.ROLE_ID
+        WHERE u.USER_ID=#{userId}
+    </select>
+
+    <select id="getAllRole" resultMap="RoleEntityMap">
+        SELECT
+            r.ROLE_ID,
+            r.ROLE_NAME,
+            r.DESCRIPTION,
+            r.COLOR
+        FROM FE_ROLE r
+    </select>
+    <insert id="addRole" parameterType="com.java5.backendapi.data.dto.RoleDto">
+        INSERT INTO fe_role (ROLE_ID
+                            , ROLE_NAME
+                            , DESCRIPTION
+                            , COLOR)
+        VALUES (#{roleId}
+               , #{roleName}
+               , #{description}
+               , #{color})
+    </insert>
+
+    <update id="updateRole" parameterType="com.java5.backendapi.data.dto.RoleDto">
+        UPDATE FE_ROLE
+        SET ROLE_NAME = #{roleName},
+            DESCRIPTION = #{description},
+            COLOR = #{color}
+        WHERE ROLE_ID = #{roleId}
+    </update>
+
+    <delete id="deleteRole" parameterType="int">
+        DELETE FROM FE_ROLE
+        WHERE ROLE_ID = #{roleId}
+    </delete>
+
+</mapper>

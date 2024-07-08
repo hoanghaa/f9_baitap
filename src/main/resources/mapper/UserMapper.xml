@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java5.backendapi.mapper.UserMapper">
+
+    <resultMap id="UserE" type="com.java5.backendapi.data.entity.UserE">
+        <result column="USER_ID" property="userId"></result>
+        <result column="USER_NAME" property="userName"></result>
+        <result column="AGE" property="age"></result>
+        <result column="ADDRESS" property="address"></result>
+        <result column="EMAIL" property="email"></result>
+        <result column="PASSWORD" property="password"></result>
+    </resultMap>
+
+    <select id="getAllUser" resultMap="UserE">
+        SELECT u.USER_ID
+              ,u.USER_NAME
+              ,u.AGE
+              ,u.ADDRESS
+              ,u.EMAIL
+              ,u.PASSWORD
+        FROM FE_USER u
+    </select>
+    
+    <insert id="saveUser" parameterType="com.java5.backendapi.data.dto.UserDto" >
+        INSERT INTO FE_USER (
+                             USER_NAME
+                            , AGE
+                            , ADDRESS
+                            , EMAIL
+                            , PASSWORD
+                            , ROLE_ID)
+        VALUES (#{fullName}
+               , #{age}
+               , #{address}
+               , #{email}
+               , #{password}
+               , #{role})
+    </insert>
+
+    <update id="updateUser" parameterType="com.java5.backendapi.data.dto.UserDto">
+        UPDATE FE_USER
+        SET USER_NAME = #{fullName}
+          , AGE = #{age}
+          , ADDRESS = #{address}
+          , EMAIL = #{email}
+          , ROLE_ID = #{role}
+        WHERE USER_ID = #{userId}
+    </update>
+</mapper>
