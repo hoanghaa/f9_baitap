@@ -49,4 +49,20 @@ public class UserApi {
         }
         return ResponseEntity.ok(result);
     }
+
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<?> doDeleteUser(@RequestParam int userId){
+        Map<String, Object> result = new HashMap();
+        try {
+            result.put("success",true);
+            result.put("message","Call api success");
+            result.put("data",userService.deleteUser(userId));
+        }catch (Exception e){
+            result.put("success",false);
+            result.put("message","Call api fail");
+            result.put("data",null);
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(result);
+    }
 }

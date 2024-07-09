@@ -46,4 +46,9 @@
           , ROLE_ID = #{role}
         WHERE USER_ID = #{userId}
     </update>
+
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM FE_USER
+        WHERE USER_ID = #{userId}
+    </delete>
 </mapper>
